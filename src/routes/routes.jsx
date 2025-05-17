@@ -1,0 +1,29 @@
+import { createBrowserRouter } from "react-router";
+import Layout from "../layout/Layout";
+import Home from "../pages/Home";
+import Addcoffee from "../pages/Addcoffee";
+import Details from "../pages/Details";
+
+export const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Layout/>,
+    children: [
+        {
+          index: true,
+          loader: () =>fetch('http://localhost:3000/coffees'),
+          element: <Home/>
+        },
+        {
+          path: '/addcoffee',
+          element: <Addcoffee/>
+
+        },
+        {
+          path: '/details/:id',
+          loader: ({params}) =>fetch(`http://localhost:3000/coffees/${params.id}`),
+          element: <Details/>
+        }
+    ]
+  },
+]);
