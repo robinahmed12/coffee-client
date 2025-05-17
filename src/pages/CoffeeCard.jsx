@@ -53,12 +53,12 @@ const CoffeeCard = ({ coffee }) => {
               <p className="dark:text-gray-800">${price}</p>
             </div>
             <div className="flex justify-between">
-              <button
-                type="button"
+              <Link to={`/update/${_id}`}
+                
                 className="flex items-center justify-center  p-3 font-semibold tracking-wide rounded-md dark:bg-violet-600 dark:text-gray-50"
               >
                 Edit
-              </button>
+              </Link>
               <Link to={`/details/${_id}`}
                 className="flex items-center justify-center  p-3 font-semibold tracking-wide rounded-md dark:bg-violet-600 dark:text-gray-50"
               >
