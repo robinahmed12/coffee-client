@@ -2,11 +2,12 @@ import React from "react";
 import { Link } from "react-router";
 import Swal from "sweetalert2";
 
-const CoffeeCard = ({ coffee }) => {
+const CoffeeCard = ({ coffee, coffees, setCoffees }) => {
+  console.log(coffees);
+
   const { photo, name, price, _id } = coffee;
 
-  const handleDelete = (_id) => {
-
+  const handleDelete = (id) => {
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -17,17 +18,17 @@ const CoffeeCard = ({ coffee }) => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-
-
-
-        fetch(`http://localhost:3000/coffees/${_id}`, {
+        fetch(`http://localhost:3000/coffees/${id}`, {
           method: "DELETE",
         })
           .then((res) => res.json())
           .then((data) => {
             console.log(data);
-            
             if (data.deletedCount) {
+              const remainCoffee = coffees.filter((cof) => cof._id !== id);
+              setCoffees(remainCoffee);
+              console.log(remainCoffee, coffees);
+
               Swal.fire({
                 title: "Deleted!",
                 text: "Your file has been deleted.",
@@ -53,13 +54,14 @@ const CoffeeCard = ({ coffee }) => {
               <p className="dark:text-gray-800">${price}</p>
             </div>
             <div className="flex justify-between">
-              <Link to={`/update/${_id}`}
-                
+              <Link
+                to={`/update/${_id}`}
                 className="flex items-center justify-center  p-3 font-semibold tracking-wide rounded-md dark:bg-violet-600 dark:text-gray-50"
               >
                 Edit
               </Link>
-              <Link to={`/details/${_id}`}
+              <Link
+                to={`/details/${_id}`}
                 className="flex items-center justify-center  p-3 font-semibold tracking-wide rounded-md dark:bg-violet-600 dark:text-gray-50"
               >
                 view
